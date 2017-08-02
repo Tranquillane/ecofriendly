@@ -11,25 +11,33 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <!-- sapling changing images - from sprout to plant - not workng-->
-  <script type="text/javascript">
-            var picPaths = ["/images/saplingbeginning.jpg", "images/saplingmiddle.jpg", "images/saplingend.jpg",];
-            var curPic = -1;
-            //preload the images for smooth animation
-            var imgO = new Array();
-            for(i=0; i < picPaths.length; i++) {
-                imgO[i] = new Image();
-                imgO[i].src = picPaths[i];
-            }
-            function swapImage() {
-                curPic = (++curPic > picPaths.length-1)? 0 : curPic;
-                imgCont.src = imgO[curPic].src;
-                setTimeout(swapImage,2000);
-            }
-            window.onload=function() {
-                imgCont = document.getElementById('imgBanner');
-                swapImage();
-            }
-  </script>
+  <script language="javascript" type="text/javascript">
+var timerid = 0;
+var images = new Array(	"images/saplingbeginning.jpg",
+			"images/saplingend.jpg",
+			"images/saplingmiddle.jpg");
+var countimages = 0;
+function startTime()
+{
+	if(timerid)
+	{
+		timerid = 0;
+	}
+	var tDate = new Date();
+
+	if(countimages == images.length)
+	{
+		countimages = 0;
+	}
+	if(tDate.getSeconds() % 5 == 0)
+	{
+		document.getElementById("img1").src = images[countimages];
+	}
+	countimages++;
+
+	timerid = setTimeout("startTime()", 1000);
+}
+</script>
 
   <script>
   var Stopwatch = function(elem, options) {
@@ -140,7 +148,7 @@ $("#my-stopwatch").stopwatch({delay: 10});
 
 <!--Making a login page is actually really complicated. Will save for later.-->
 
-<body onload = "startTimer()">
+<body onload = "startTime()">
   <p>Here you will find a variety of utilities to help you save the Earth's resources.</p>
   <!--Cycles through the fun facts through text-->
   <div class="container">
@@ -217,7 +225,7 @@ $("#my-stopwatch").stopwatch({delay: 10});
   </script>
 
   <div>
-     <img id="imgBanner" src="images/saplingbeginning.jpg" alt="Sapling"/>
+     <img id="img1" src="images/saplingbeginning.jpg" />
   </div>
 </body>
 </html>
